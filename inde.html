@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Pupuk</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animasi masuk */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease;
+}
+
+h2 {
+    margin-bottom: 20px;
+    animation: fadeInUp 1.2s ease;
+}
+
+/* Input animasi */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: green;
+    box-shadow: 0 0 8px rgba(0,128,0,0.5);
+}
+
+/* Tombol animasi */
+button {
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: darkgreen;
+    transform: scale(1.05);
+}
+
+/* Hasil animasi */
+.hasil {
+    margin-top: 15px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.5s;
+}
+
+.hasil.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator Pupuk 🌾</h2>
+
+    <input type="number" id="luas" placeholder="Masukkan luas lahan (ha)">
+
+    <select id="tanaman">
+        <option value="">-- Pilih Tanaman --</option>
+        <option value="padi">Padi</option>
+        <option value="jagung">Jagung</option>
+        <option value="kedelai">Kedelai</option>
+    </select>
+
+    <button onclick="hitung()">Hitung</button>
+
+    <div class="hasil" id="output"></div>
+</div>
+
+<script>
+// Nama: Dicky
+// NIM: XXXXX
+
+function hitung() {
+    let luasLahan = parseFloat(document.getElementById("luas").value);
+    let jenisTanaman = document.getElementById("tanaman").value;
+    let output = document.getElementById("output");
+
+    let kebutuhanPerHektar;
+    let totalPupuk;
+
+    if (jenisTanaman === "padi") {
+        kebutuhanPerHektar = 50;
+    } else if (jenisTanaman === "jagung") {
+        kebutuhanPerHektar = 40;
+    } else if (jenisTanaman === "kedelai") {
+        kebutuhanPerHektar = 30;
+    } else {
+        output.innerHTML = "Jenis tanaman tidak dikenali!";
+        output.classList.add("show");
+        return;
+    }
+
+    totalPupuk = luasLahan * kebutuhanPerHektar;
+
+    let kategori = "";
+
+    if (totalPupuk > 100) {
+        kategori = "Kebutuhan pupuk Anda tinggi, pastikan stok cukup.";
+    } else if (totalPupuk >= 50 && totalPupuk <= 100) {
+        kategori = "Kebutuhan pupuk Anda sedang.";
+    } else {
+        kategori = "Kebutuhan pupuk Anda rendah.";
+    }
+
+    output.innerHTML =
+        "Total kebutuhan pupuk: " + totalPupuk + " kg<br>" + kategori;
+
+    // Trigger animasi hasil
+    output.classList.remove("show");
+    setTimeout(() => {
+        output.classList.add("show");
+    }, 50);
+}
+</script>
+
+</body>
+</html>
